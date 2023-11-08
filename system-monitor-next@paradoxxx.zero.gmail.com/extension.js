@@ -2090,8 +2090,9 @@ const Fan = class SystemMonitor_Fan extends ElementBase {
         this.update();
     }
     refresh() {
-        let sfile = this.extension._Schema.get_string(this.elt + '-sensor-file');
-        if (GLib.file_test(sfile, GLib.FileTest.EXISTS)) {
+        let label = this.extension._Schema.get_string(this.elt + '-sensor-file');
+        let sfile = this.sensors[label];
+        if (sfile && GLib.file_test(sfile, GLib.FileTest.EXISTS)) {
             let file = Gio.file_new_for_path(sfile);
             file.load_contents_async(null, (source, result) => {
                 let as_r = source.load_contents_finish(result)
@@ -2234,8 +2235,8 @@ const Gpu = class SystemMonitor_Gpu extends ElementBase {
             this.vals = [0, 0];
             this.tip_vals = [0, 0];
         } else {
-            // we subtract percentage from memory because we do not want memory to be 
-            // "accumulated" in the chart with utilization; these two measures should be 
+            // we subtract percentage from memory because we do not want memory to be
+            // "accumulated" in the chart with utilization; these two measures should be
             // independent
             this.vals = [this.percentage, this.mem / this.total * 100 - this.percentage];
             this.tip_vals = [Math.round(this.vals[0]), this.mem];

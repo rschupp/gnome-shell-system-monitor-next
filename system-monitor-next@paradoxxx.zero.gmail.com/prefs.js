@@ -42,8 +42,7 @@ function check_sensors(sensor_type) {
     const hwmon_path = '/sys/class/hwmon/';
     const hwmon_dir = Gio.file_new_for_path(hwmon_path);
 
-    const sensor_files = [];
-    const sensor_labels = [];
+    const sensors = {};
 
     function get_label_from(file) {
         if (file.query_exists(null)) {
@@ -83,8 +82,8 @@ function check_sensors(sensor_type) {
             const input = chip_children.get_child(info);
             const input_label = get_label_from(chip_dir.get_child(sensor_type + input_ordinal + '_label'));
 
-            sensor_files.push(input.get_path());
-            sensor_labels.push(chip_label + ' - ' + (input_label || input_ordinal));
+            const label = chip_label + ' - ' + (input_label || input_ordinal);
+            sensors[label] = input.get_path();
             added = true;
         }
         return added;
@@ -94,7 +93,7 @@ function check_sensors(sensor_type) {
         'standard::name,standard::type', Gio.FileQueryInfoFlags.NONE, null);
     if (!hwmon_children) {
         sm_log('error enumerating hwmon children');
-        return [[], []];
+        return {};
     }
 
     let info;
@@ -114,7 +113,7 @@ function check_sensors(sensor_type) {
             }
         }
     }
-    return [sensor_files, sensor_labels];
+    return sensors;
 }
 
 // ** General Preferences Page **
@@ -532,15 +531,15 @@ const SMExpanderRow = GObject.registerClass({
                     'thermal-tz0-color',
                 ];
 
-                let [_slist, _strlist] = check_sensors('temp');
+                const labels = check_sensors('temp').keys();
                 let stringListModel = new Gtk.StringList();
 
-                if (_slist.length === 0)
+                if (labels.length === 0)
                     stringListModel.append(_('Please install lm-sensors'));
-                else if (_slist.length === 1)
-                    this._settings.set_string('thermal-sensor-file', _slist[0]);
+                else if (labels.length === 1)
+                    this._settings.set_string('thermal-sensor-file', labels[0]);
 
-                _strlist.forEach(str => {
+                labels.forEach(str => {
                     stringListModel.append(str);
                 });
 
@@ -548,13 +547,13 @@ const SMExpanderRow = GObject.registerClass({
                 item.set_model(stringListModel);
 
                 try {
-                    item.set_selected(_slist.indexOf(this._settings.get_string('thermal-sensor-file')));
+                    item.set_selected(labels.indexOf(this._settings.get_string('thermal-sensor-file')));
                 } catch (e) {
                     item.set_selected(0);
                 }
 
                 item.connect('notify::selected', widget => {
-                    this._settings.set_string('thermal-sensor-file', _slist[widget.selected]);
+                    this._settings.set_string('thermal-sensor-file', labels[widget.selected]);
                 });
                 this.add_row(item);
                 this._addColorsItem(thermalColors);
@@ -590,15 +589,15 @@ const SMExpanderRow = GObject.registerClass({
 
                 this._addColorsItem(fanColors);
 
-                let [_slist, _strlist] = check_sensors('fan');
+                const labels = check_sensors('fan').keys();
                 let stringListModel = new Gtk.StringList();
 
-                if (_slist.length === 0)
+                if (labels.length === 0)
                     stringListModel.append(_('Please install lm-sensors'));
-                else if (_slist.length === 1)
-                    this._settings.set_string('fan-sensor-file', _slist[0]);
+                else if (labels.length === 1)
+                    this._settings.set_string('fan-sensor-file', labels[0]);
 
-                _strlist.forEach(str => {
+                labels.forEach(str => {
                     stringListModel.append(str);
                 });
 
@@ -606,13 +605,13 @@ const SMExpanderRow = GObject.registerClass({
                 item.set_model(stringListModel);
 
                 try {
-                    item.set_selected(_slist.indexOf(this._settings.get_string('fan-sensor-file')));
+                    item.set_selected(labels.indexOf(this._settings.get_string('fan-sensor-file')));
                 } catch (e) {
                     item.set_selected(0);
                 }
 
                 item.connect('notify::selected', widget => {
-                    this._settings.set_string('fan-sensor-file', _slist[widget.selected]);
+                    this._settings.set_string('fan-sensor-file', labels[widget.selected]);
                 });
                 this.add_row(item);
                 break;
