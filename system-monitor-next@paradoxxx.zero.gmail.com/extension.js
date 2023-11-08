@@ -39,6 +39,8 @@ import * as PopupMenu from "resource:///org/gnome/shell/ui/popupMenu.js";
 
 import * as Util from "resource:///org/gnome/shell/misc/util.js";
 
+import { parse_bytearray, check_sensors } from './common.js';
+
 const NetworkManager = NM;
 const UPower = UPowerGlib;
 // Copied as of https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/5fa08fe53376f5dca755360bd005a4a51ca78917/js/ui/panel.js#L45
@@ -64,11 +66,6 @@ Clutter.Actor.prototype.reparent = function reparent(newParent) {
 
 function sm_log(message) {
     console.log(`[system-monitor-next] ${message}`);
-}
-
-function parse_bytearray(maybeBA) {
-    const decoder = new TextDecoder('utf-8');
-    return decoder.decode(maybeBA);
 }
 
 function l_limit(t) {
@@ -2010,6 +2007,7 @@ const Thermal = class SystemMonitor_Thermal extends ElementBase {
             color_name: ['tz0']
         });
         this.max = 100;
+        this.sensors = check_sensors("temp");
 
         this.item_name = _('Thermal');
         this.temperature = '-- ';
@@ -2020,8 +2018,9 @@ const Thermal = class SystemMonitor_Thermal extends ElementBase {
         this.update();
     }
     refresh() {
-        let sfile = this.extension._Schema.get_string(this.elt + '-sensor-file');
-        if (GLib.file_test(sfile, GLib.FileTest.EXISTS)) {
+        let label = this.extension._Schema.get_string(this.elt + '-sensor-file');
+        let sfile = this.sensors[label];
+        if (sfile !== undefined && GLib.file_test(sfile, GLib.FileTest.EXISTS)) {
             let file = Gio.file_new_for_path(sfile);
             file.load_contents_async(null, (source, result) => {
                 let as_r = source.load_contents_finish(result)
@@ -2083,6 +2082,7 @@ const Fan = class SystemMonitor_Fan extends ElementBase {
             item_name: _('Fan'),
             color_name: ['fan0']
         });
+        this.sensors = check_sensors("fan");
         this.rpm = 0;
         this.display_error = true;
         this.tip_format(_('rpm'));
