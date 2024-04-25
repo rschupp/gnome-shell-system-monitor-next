@@ -1,15 +1,15 @@
 <schemalist gettext-domain="system-monitor">
-  <enum id="org.gnome.shell.extensions.system-monitor.display-style">
+  <enum id="org.gnome.shell.extensions.system-monitor-applet.display-style">
     <value value="0" nick="digit"/>
     <value value="1" nick="graph"/>
     <value value="2" nick="both"/>
   </enum>
-  <enum id="org.gnome.shell.extensions.system-monitor.disk-usage-style">
+  <enum id="org.gnome.shell.extensions.system-monitor-applet.disk-usage-style">
     <value value="0" nick="pie"/>
     <value value="1" nick="bar"/>
-    <value value="2" nick="none"/>       
+    <value value="2" nick="none"/>
   </enum>
-  <schema id="org.gnome.shell.extensions.system-monitor" path="/org/gnome/shell/extensions/system-monitor/">
+  <schema id="org.gnome.shell.extensions.system-monitor-applet" path="/org/gnome/shell/extensions/system-monitor-applet/">
     <key name="icon-display" type="b">
       <default>true</default>
       <summary>Display system monitor icon</summary>
@@ -40,7 +40,7 @@
       <summary>Display Memory In Menu</summary>
       <description>Set to true to show memory in pop-up menu</description>
     </key>
-    <key name="memory-style" enum="org.gnome.shell.extensions.system-monitor.display-style">
+    <key name="memory-style" enum="org.gnome.shell.extensions.system-monitor-applet.display-style">
       <default>'graph'</default>
       <summary>Choose the display style.</summary>
     </key>
@@ -69,7 +69,7 @@
       <summary>Display Swap In Menu</summary>
       <description>Set to true to show swap in pop-up menu</description>
     </key>
-    <key name="swap-style" enum="org.gnome.shell.extensions.system-monitor.display-style">
+    <key name="swap-style" enum="org.gnome.shell.extensions.system-monitor-applet.display-style">
       <default>'graph'</default>
       <summary>Choose the display style.</summary>
     </key>
@@ -98,7 +98,7 @@
       <summary>Display Cpu In Menu</summary>
       <description>Set to true to show cpu in pop-up menu</description>
     </key>
-    <key name="cpu-style" enum="org.gnome.shell.extensions.system-monitor.display-style">
+    <key name="cpu-style" enum="org.gnome.shell.extensions.system-monitor-applet.display-style">
       <default>'graph'</default>
       <summary>Choose the display style.</summary>
     </key>
@@ -132,7 +132,7 @@
       <summary>Display GPU In Menu</summary>
       <description>Set to true to show GPU in pop-up menu</description>
     </key>
-    <key name="gpu-style" enum="org.gnome.shell.extensions.system-monitor.display-style">
+    <key name="gpu-style" enum="org.gnome.shell.extensions.system-monitor-applet.display-style">
       <default>'graph'</default>
       <summary>Choose the display style.</summary>
     </key>
@@ -161,7 +161,7 @@
       <summary>Display Freq In Menu</summary>
       <description>Set to true to show freq in pop-up menu</description>
     </key>
-    <key name="freq-style" enum="org.gnome.shell.extensions.system-monitor.display-style">
+    <key name="freq-style" enum="org.gnome.shell.extensions.system-monitor-applet.display-style">
       <default>'graph'</default>
       <summary>Choose the display style.</summary>
     </key>
@@ -190,7 +190,7 @@
       <summary>Display Net In Menu</summary>
       <description>Set to true to show net in pop-up menu</description>
     </key>
-    <key name="net-style" enum="org.gnome.shell.extensions.system-monitor.display-style">
+    <key name="net-style" enum="org.gnome.shell.extensions.system-monitor-applet.display-style">
       <default>'graph'</default>
       <summary>Choose the display style.</summary>
     </key>
@@ -223,11 +223,11 @@
       <summary>Display Disk In Menu</summary>
       <description>Set to true to show disk in pop-up menu</description>
     </key>
-    <key name="disk-style" enum="org.gnome.shell.extensions.system-monitor.display-style">
+    <key name="disk-style" enum="org.gnome.shell.extensions.system-monitor-applet.display-style">
       <default>'graph'</default>
       <summary>Choose the display style.</summary>
     </key>
-    <key name="disk-usage-style" enum="org.gnome.shell.extensions.system-monitor.disk-usage-style">
+    <key name="disk-usage-style" enum="org.gnome.shell.extensions.system-monitor-applet.disk-usage-style">
       <default>'pie'</default>
       <summary>Choose the disk usage display style.</summary>
     </key>
@@ -256,7 +256,7 @@
       <summary>Display Temps In Menu</summary>
       <description>Set to true to show thermal in pop-up menu</description>
     </key>
-    <key name="thermal-style" enum="org.gnome.shell.extensions.system-monitor.display-style">
+    <key name="thermal-style" enum="org.gnome.shell.extensions.system-monitor-applet.display-style">
       <default>'graph'</default>
       <summary>Choose the display style.</summary>
     </key>
@@ -295,7 +295,7 @@
       <summary>Display Fans In Menu</summary>
       <description>Set to true to show fan in pop-up menu</description>
     </key>
-    <key name="fan-style" enum="org.gnome.shell.extensions.system-monitor.display-style">
+    <key name="fan-style" enum="org.gnome.shell.extensions.system-monitor-applet.display-style">
       <default>'graph'</default>
       <summary>Choose the display style.</summary>
     </key>
@@ -447,7 +447,7 @@
       <summary>Display 'batt'</summary>
       <description>Set to true to show battery in pop-up menu</description>
     </key>
-	<key name="battery-style" enum="org.gnome.shell.extensions.system-monitor.display-style">
+	<key name="battery-style" enum="org.gnome.shell.extensions.system-monitor-applet.display-style">
       <default>'digit'</default>
       <summary>Choose the display style.</summary>
     </key>
