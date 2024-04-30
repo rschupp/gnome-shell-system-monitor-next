@@ -2014,11 +2014,11 @@ const Thermal = class SystemMonitor_Thermal extends ElementBase {
         this.fahrenheit_unit = extension._Schema.get_boolean(this.elt + '-fahrenheit-unit');
         this.display_error = true;
         this.tip_format(this.temperature_symbol());
-        extension._Schema.connect('changed::' + this.elt + '-sensor-file', this.refresh.bind(this));
+        extension._Schema.connect('changed::' + this.elt + '-sensor-label', this.refresh.bind(this));
         this.update();
     }
     refresh() {
-        let label = this.extension._Schema.get_string(this.elt + '-sensor-file');
+        let label = this.extension._Schema.get_string(this.elt + '-sensor-label');
         let sfile = this.sensors[label];
         if (sfile !== undefined && GLib.file_test(sfile, GLib.FileTest.EXISTS)) {
             let file = Gio.file_new_for_path(sfile);
@@ -2086,11 +2086,11 @@ const Fan = class SystemMonitor_Fan extends ElementBase {
         this.rpm = 0;
         this.display_error = true;
         this.tip_format(_('rpm'));
-        extension._Schema.connect('changed::' + this.elt + '-sensor-file', this.refresh.bind(this));
+        extension._Schema.connect('changed::' + this.elt + '-sensor-label', this.refresh.bind(this));
         this.update();
     }
     refresh() {
-        let label = this.extension._Schema.get_string(this.elt + '-sensor-file');
+        let label = this.extension._Schema.get_string(this.elt + '-sensor-label');
         let sfile = this.sensors[label];
         if (sfile && GLib.file_test(sfile, GLib.FileTest.EXISTS)) {
             let file = Gio.file_new_for_path(sfile);

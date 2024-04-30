@@ -456,7 +456,7 @@ const SMExpanderRow = GObject.registerClass({
                 if (labels.length === 0)
                     stringListModel.append(_('No temperature sensors found'));
                 else if (labels.length === 1)
-                    this._settings.set_string('thermal-sensor-file', labels[0]);
+                    this._settings.set_string('thermal-sensor-label', labels[0]);
 
                 labels.forEach(str => {
                     stringListModel.append(str);
@@ -466,13 +466,13 @@ const SMExpanderRow = GObject.registerClass({
                 item.set_model(stringListModel);
 
                 try {
-                    item.set_selected(labels.indexOf(this._settings.get_string('thermal-sensor-file')));
+                    item.set_selected(labels.indexOf(this._settings.get_string('thermal-sensor-label')));
                 } catch (e) {
                     item.set_selected(0);
                 }
 
                 item.connect('notify::selected', widget => {
-                    this._settings.set_string('thermal-sensor-file', labels[widget.selected]);
+                    this._settings.set_string('thermal-sensor-label', labels[widget.selected]);
                 });
                 this.add_row(item);
                 this._addColorsItem(thermalColors);
@@ -514,7 +514,7 @@ const SMExpanderRow = GObject.registerClass({
                 if (labels.length === 0)
                     stringListModel.append(_('No fan sensors found'));
                 else if (labels.length === 1)
-                    this._settings.set_string('fan-sensor-file', labels[0]);
+                    this._settings.set_string('fan-sensor-label', labels[0]);
 
                 labels.forEach(str => {
                     stringListModel.append(str);
@@ -524,13 +524,13 @@ const SMExpanderRow = GObject.registerClass({
                 item.set_model(stringListModel);
 
                 try {
-                    item.set_selected(labels.indexOf(this._settings.get_string('fan-sensor-file')));
+                    item.set_selected(labels.indexOf(this._settings.get_string('fan-sensor-label')));
                 } catch (e) {
                     item.set_selected(0);
                 }
 
                 item.connect('notify::selected', widget => {
-                    this._settings.set_string('fan-sensor-file', labels[widget.selected]);
+                    this._settings.set_string('fan-sensor-label', labels[widget.selected]);
                 });
                 this.add_row(item);
                 break;
