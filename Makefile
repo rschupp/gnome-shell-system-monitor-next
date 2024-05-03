@@ -6,6 +6,7 @@ INSTALLNAME = $(UUID)
 
 BASE_MODULES = \
   $(UUID)/extension.js \
+  $(UUID)/common.js \
   $(UUID)/README* \
   $(UUID)/metadata.json \
   $(UUID)/prefs.js \
